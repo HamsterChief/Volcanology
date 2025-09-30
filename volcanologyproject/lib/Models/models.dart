@@ -46,7 +46,7 @@ class User {
 
 class Comment {
   final String createdBy; // username
-  final String content;
+  final String content; // comment made by user
   final String date; // e.g., "2020-01-01"
 
   Comment({required this.createdBy, required this.content, required this.date});
