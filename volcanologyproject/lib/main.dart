@@ -9,98 +9,64 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.green,
-          title: const Text('Volcanology'),
-        ),
-        body: Center(
-          child: InkWell(
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: const Text('Comments'),
-                    content: const Text('No comments to show.'),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text('Close'),
-                      ),
-                    ],
-                  );
-                },
-              );
-            },
-            child: Ink(
-              height: 100,
-              width: 100,
-              color: Colors.blue,
-              child: const Center(
-                child: Text('Tap me', style: TextStyle(color: Colors.white)),
-              ),
+    return MaterialApp(home: HomePage());
+  }
+}
+
+class HomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.green,
+        title: const Text('Volcanology'),
+      ),
+      body: Center(
+        child: InkWell(
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text('Comments'),
+                  content: SizedBox(
+                    width: double.maxFinite,
+                    child: ListView(
+                      shrinkWrap: true,
+                      children: comments
+                          .map(
+                            (comment) => ListTile(
+                              title: Text(comment.content),
+                              subtitle: Text(
+                                'By ${comment.createdBy} on ${comment.date}',
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    ),
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('Close'),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+          child: Ink(
+            height: 100,
+            width: 100,
+            color: Colors.blue,
+            child: const Center(
+              child: Text('Krakatau', style: TextStyle(color: Colors.white)),
             ),
           ),
         ),
       ),
     );
   }
-}
-
-// backend data models
-
-// example event name:  Earthmovements
-// date: "2020-01-01"
-// description: "A significant earthquake was recorded."
-class Event {
-  final String name;
-  final String date; // e.g., "2020-01-01"
-  final String description;
-  final List<Comment> comments;
-
-  Event({
-    required this.name,
-    required this.date,
-    required this.description,
-    required this.comments,
-  });
-}
-
-// example valcano
-//name: "Mount St. Helens"
-//lacation: "Washington, USA"
-//recordedEvents: [event(name: "Eruption", date: "1980-05-18", description: "Major eruption causing significant damage.")],
-//lastEruption: "2008"
-class Volcano {
-  final String name;
-  final String location;
-  final List<Event> recordedEvents;
-  final String lastEruption; // e.g., "2020", "Unknown", etc.
-
-  Volcano({
-    required this.name,
-    required this.location,
-    required this.lastEruption,
-    required this.recordedEvents,
-  });
-}
-
-class User {
-  final String username;
-  final String email;
-  final bool admin;
-
-  User({required this.username, required this.email, required this.admin});
-}
-
-class Comment {
-  final String createdBy; // username
-  final String content;
-  final String date; // e.g., "2020-01-01"
-
-  Comment({required this.createdBy, required this.content, required this.date});
 }
