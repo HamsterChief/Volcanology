@@ -15,6 +15,37 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.green,
           title: const Text('Volcanology'),
         ),
+        body: Center(
+          child: InkWell(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text('Comments'),
+                    content: const Text('No comments to show.'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('Close'),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+            child: Ink(
+              height: 100,
+              width: 100,
+              color: Colors.blue,
+              child: const Center(
+                child: Text('Tap me', style: TextStyle(color: Colors.white)),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
